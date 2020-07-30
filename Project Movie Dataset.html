@@ -13106,14 +13106,19 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In this movie dataset more than 10.000 movies and their features are listed. Some of the features are Genre, Revenue, Year or Director. 
-Over the course of the analysis of this movie dataset I want to find out how adjustet budget and revenue have developed over the years, which genres have been the most popular over the years, if higher popularity levels lead to higher ratings and which directors made the most revenue.</p>
-
+Over the course of the analysis of this movie dataset I want to answer the following questions:</p>
+<ul>
+<li>What's the mean adjusted budget and revenue over the years (1960 - 2015)?</li>
+<li>What's the most popular genre over the years?</li>
+<li>Who are the top 5 directors in terms of adjusted revenue earned with their respective movies?</li>
+<li>Do more popular movies get better scores?</li>
+</ul>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[143]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -13137,7 +13142,7 @@ Over the course of the analysis of this movie dataset I want to find out how adj
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[144]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;tmdb-movies.csv&quot;</span><span class="p">)</span>
@@ -13154,7 +13159,7 @@ Over the course of the analysis of this movie dataset I want to find out how adj
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[144]:</div>
+    <div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -13686,7 +13691,7 @@ Additionally we will drop rows with missing data and "0" instead of null data</p
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[149]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -13703,7 +13708,7 @@ Additionally we will drop rows with missing data and "0" instead of null data</p
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[149]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13728,7 +13733,7 @@ Additionally we will drop rows with missing data and "0" instead of null data</p
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[150]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">drop_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;imdb_id&quot;</span><span class="p">,</span> <span class="s2">&quot;homepage&quot;</span><span class="p">,</span> <span class="s2">&quot;keywords&quot;</span><span class="p">,</span> <span class="s2">&quot;tagline&quot;</span><span class="p">,</span> <span class="s2">&quot;overview&quot;</span><span class="p">,</span> <span class="s2">&quot;production_companies&quot;</span><span class="p">]</span>
@@ -13783,7 +13788,7 @@ Additionally we will drop rows with missing data and "0" instead of null data</p
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[152]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -13872,7 +13877,7 @@ memory usage: 1.3+ MB
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[154]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">means_rev</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;release_year&quot;</span><span class="p">)[</span><span class="s2">&quot;revenue_adj&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -13889,7 +13894,7 @@ memory usage: 1.3+ MB
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[154]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13971,7 +13976,7 @@ Name: revenue_adj, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[155]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">means_bud</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;release_year&quot;</span><span class="p">)[</span><span class="s2">&quot;budget_adj&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -13988,7 +13993,7 @@ Name: revenue_adj, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[155]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -14073,7 +14078,7 @@ Additionally we have to keep in mind that we have many "0" values for revenue an
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[156]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">diag</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
@@ -14126,7 +14131,7 @@ Until 1980s we only have around 30-60 movies per year. Later we have a couple hu
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[157]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;release_year&quot;</span><span class="p">)[</span><span class="s2">&quot;budget_adj&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
@@ -14142,7 +14147,7 @@ Until 1980s we only have around 30-60 movies per year. Later we have a couple hu
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[157]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -14232,7 +14237,7 @@ We get a pretty clear picture of more modern movies: Since 1981 it's either Dram
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[158]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;release_year&quot;</span><span class="p">)[</span><span class="s2">&quot;genres&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -14248,69 +14253,69 @@ We get a pretty clear picture of more modern movies: Since 1981 it's either Dram
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[158]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>release_year
-1960                    Horror
-1961                     Drama
-1962                     Drama
-1963                    Horror
-1964            Comedy|Romance
-1965                     Drama
-1966            Action|Western
-1967      Comedy|Drama|Romance
-1968                    Comedy
-1969                     Drama
-1970                    Horror
-1971                     Drama
-1972                    Comedy
-1973               Crime|Drama
-1974                     Drama
-1975                    Comedy
-1976           Horror|Thriller
-1977    Horror|Science Fiction
-1978                    Horror
-1979                    Comedy
-1980             Action|Comedy
-1981                    Comedy
-1982                    Comedy
-1983                    Comedy
-1984                    Comedy
-1985                     Drama
-1986                    Comedy
-1987                    Comedy
-1988                     Drama
-1989                    Comedy
-1990              Comedy|Drama
-1991                     Drama
-1992                     Drama
-1993                    Comedy
-1994                    Comedy
-1995                    Comedy
-1996                    Comedy
-1997                    Comedy
-1998              Comedy|Drama
-1999                    Comedy
-2000                    Comedy
-2001                    Comedy
-2002              Comedy|Drama
-2003                    Comedy
-2004                    Comedy
-2005                     Drama
-2006                     Drama
-2007                    Comedy
-2008                     Drama
-2009                    Comedy
-2010                     Drama
-2011                     Drama
-2012                     Drama
-2013                     Drama
-2014                     Drama
-2015                     Drama
+1960                            Horror
+1961                            Horror
+1962                             Drama
+1963                            Horror
+1964                    Comedy|Romance
+1965    Action|Adventure|Drama|Western
+1966                    Action|Western
+1967              Comedy|Drama|Romance
+1968                             Drama
+1969                             Drama
+1970                            Horror
+1971                             Drama
+1972                            Comedy
+1973                            Horror
+1974                             Drama
+1975                             Drama
+1976                   Horror|Thriller
+1977            Horror|Science Fiction
+1978                            Horror
+1979                            Comedy
+1980                     Action|Comedy
+1981                            Comedy
+1982                            Comedy
+1983                            Comedy
+1984                            Comedy
+1985                             Drama
+1986                            Comedy
+1987                            Comedy
+1988                             Drama
+1989                            Comedy
+1990                      Comedy|Drama
+1991                             Drama
+1992                             Drama
+1993                            Comedy
+1994                            Comedy
+1995                            Comedy
+1996                            Comedy
+1997                            Comedy
+1998                      Comedy|Drama
+1999                            Comedy
+2000                            Comedy
+2001                            Comedy
+2002                      Comedy|Drama
+2003                            Comedy
+2004                            Comedy
+2005                             Drama
+2006                             Drama
+2007                            Comedy
+2008                             Drama
+2009                            Comedy
+2010                             Drama
+2011                             Drama
+2012                             Drama
+2013                             Drama
+2014                             Drama
+2015                             Drama
 Name: genres, dtype: object</pre>
 </div>
 
@@ -14337,7 +14342,7 @@ Name: genres, dtype: object</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[159]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">director_revs</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;director&quot;</span><span class="p">)[</span><span class="s2">&quot;revenue_adj&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
@@ -14354,7 +14359,7 @@ Name: genres, dtype: object</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[159]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -14386,7 +14391,7 @@ You can clearly see that Steven Spielberg is above all with his 15 billion earne
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[160]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
@@ -14433,14 +14438,58 @@ You can clearly see that Steven Spielberg is above all with his 15 billion earne
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>First, we want create a new column with cut() that has different levels of popularity (low, moederately low, moderately high, high). For that, we need to get the edges with describe()</p>
+<p>We want to create a new column with cut() that has different levels of popularity (low, moederately low, moderately high, high). For that, we need to get the edges with describe().
+But first, we should get a feeling about the distribution of popularity with a histogram.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[161]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;popularity&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">();</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Looks like almost all values are around 0 to 1. We can use describe() to get our edges for cut() and confirm that indeed our mean is 0.65 for all values.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;popularity&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -14456,7 +14505,7 @@ You can clearly see that Steven Spielberg is above all with his 15 billion earne
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[161]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -14489,7 +14538,7 @@ Name: popularity, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[162]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">edges</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.000188</span><span class="p">,</span> <span class="mf">0.210765</span><span class="p">,</span> <span class="mf">0.387081</span><span class="p">,</span> <span class="mf">0.720889</span><span class="p">,</span> <span class="mf">32.985763</span><span class="p">]</span>
@@ -14508,7 +14557,7 @@ Name: popularity, dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[162]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -14754,10 +14803,11 @@ Name: vote_average, dtype: float64</pre>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><a id='conclusions'></a></p>
-<h2 id="Conclusions">Conclusions<a class="anchor-link" href="#Conclusions">&#182;</a></h2><p>That concludes my analysis of this dataset. It has to be said that many missing values in form of "0" values for budget and revenue make it harder to analyse those features.
-What can be said about the dataset? If a movie has a "high" popularity level it leads by average to a better score than scores from all the other popularity levels.
-The director with most revenue made is Steven Spielberg (around 15 billion dollar) and the most popular genres over the last 40 years are either Drama or Comedy. 
-Further analysis regarding budget and revenue has to be made. Why are so few movies from earlier days in the set? Do we not have enough info about them? Maybe it would be better that analyse years that have a minimum of movies or a minimum of "0" values.</p>
+<h2 id="Conclusions">Conclusions<a class="anchor-link" href="#Conclusions">&#182;</a></h2><p>That concludes my analysis of this dataset. What can be said about the dataset? If a movie has a "high" popularity level it leads by average to a better score than scores from all the other popularity levels.
+The director with most revenue made is Steven Spielberg (around 15 billion dollar) and the most popular genres over the last 40 years are either Drama or Comedy.</p>
+<h3 id="Limitations">Limitations<a class="anchor-link" href="#Limitations">&#182;</a></h3><p>It has to be said that many missing values in form of "0" values for budget and revenue make it harder to analyse those features. Means for budgets and revenues columns are skewed because of the many 0 values.
+Further analysis regarding budget and revenue has to be made. Why are so few movies from earlier days in the set? Do we not have enough info about them? Maybe it would be better that analyse years that have a minimum of movies or a minimum of "0" values.
+Additionally it would be best to get have something like a "popularity_adj" column because popularity can be better tracked over the years with social media rising since the early 2000s. Can we account for that before social media?</p>
 
 </div>
 </div>
